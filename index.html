@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSUN Campus Map Quiz</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Project Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!-- ========== SIDEBAR ========== -->
+    <div id="sidebar">
+
+        <h2>Map Quiz. Please double click on the map the location of:</h2>
+
+        <!-- Running list of questions + answers appended here by JS -->
+        <div id="question-list"></div>
+
+        <!-- Progress bar -->
+        <div id="progress-wrap">
+            <div id="progress-bar"></div>
+        </div>
+
+        <!-- Stats: timer and high score -->
+        <div id="stats-bar">
+            <div class="stat-row">
+                <span class="stat-icon">⏱</span>
+                Time: <span id="timer">0</span>s
+            </div>
+            <div class="stat-row">
+                <span class="stat-icon">🏆</span>
+                Best: <span id="high-score-val">--</span>s
+            </div>
+        </div>
+
+        <!-- Badge shown when player sets a new best time -->
+        <div id="new-hs-badge">🏆 NEW BEST TIME!</div>
+
+        <!-- Final score display (shown after round ends) -->
+        <div id="score-display"></div>
+
+        <!-- Restart button -->
+        <button id="restart-btn">▶ Play Again</button>
+
+        <!-- Instructions -->
+        <div id="instructions">
+            Double-click the map to guess each location.<br>
+            All 5 rounds &bull; Panning &amp; zoom disabled.
+        </div>
+
+    </div>
+
+    <!-- ========== MAP ========== -->
+    <div id="map"></div>
+
+    <!-- Locations data -->
+    <script src="locations.js"></script>
+
+    <!-- Game logic -->
+    <script src="app.js"></script>
+
+    <!-- Google Maps API — must load last; triggers initMap() callback -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATX1BrKnReb-t9wyN6IJe_a_2O36S70Mo&callback=initMap">
+    </script>
+
+</body>
+</html>
