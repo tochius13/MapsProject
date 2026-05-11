@@ -1,27 +1,19 @@
-/* ==========================================
-   style.css — CSUN Campus Map Quiz
-   ========================================== */
+/* style.css — CSUN Campus Map Quiz */
 
-/* ---------- CSS Variables ---------- */
 :root {
-    --tan:        #c8b99a;
-    --tan-dark:   #b0a080;
-    --blue:       #2a6db5;
-    --blue-light: #3a85d8;
-    --green:      #27ae60;
-    --red:        #e74c3c;
-    --gold:       #f0c040;
-    --text-dark:  #1a1a1a;
-    --text-light: #f5f5f5;
-    --sidebar-w:  300px;
+    --tan:      #c8b99a;
+    --tan-dark: #b0a080;
+    --blue:     #2a6db5;
+    --blue-lt:  #3a85d8;
+    --green:    #27ae60;
+    --red:      #e74c3c;
+    --gold:     #f0c040;
+    --dark:     #1a1a1a;
+    --light:    #f5f5f5;
+    --sidebar:  300px;
 }
 
-/* ---------- Reset ---------- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Source Sans 3', sans-serif;
@@ -31,14 +23,12 @@ body {
     overflow: hidden;
 }
 
-/* ==========================================
-   SIDEBAR
-   ========================================== */
+/* ---- Sidebar ---- */
 #sidebar {
-    width: var(--sidebar-w);
-    min-width: var(--sidebar-w);
+    width: var(--sidebar);
+    min-width: var(--sidebar);
     background: var(--tan);
-    padding: 18px 16px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -48,19 +38,29 @@ body {
 
 #sidebar h2 {
     font-family: 'Oswald', sans-serif;
-    font-size: 1.15em;
+    font-size: 1.05em;
     font-weight: 700;
-    color: var(--text-dark);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 14px;
-    line-height: 1.3;
+    margin-bottom: 12px;
 }
 
-/* ---------- Question items ---------- */
+#diff-badge {
+    display: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--tan-dark);
+    padding: 3px 10px;
+    border-radius: 3px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 .q-item {
     background: var(--blue);
-    color: var(--text-light);
+    color: var(--light);
     padding: 6px 10px;
     text-align: center;
     font-size: 0.88em;
@@ -69,78 +69,85 @@ body {
     border-radius: 2px;
 }
 
-/* ---------- Answer feedback ---------- */
-.answer-correct {
-    color: var(--gold);
+.hint-text {
+    background: #fffbe6;
+    border-left: 3px solid var(--gold);
+    color: #5a4500;
+    font-size: 0.82em;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    border-radius: 2px;
+    font-style: italic;
+    animation: fadeSlide 0.4s ease forwards;
+    opacity: 0;
+}
+
+.answer-correct, .answer-wrong {
     text-align: center;
     font-size: 0.82em;
     font-weight: 600;
     margin-bottom: 4px;
     opacity: 0;
-    transform: translateY(-4px);
     animation: fadeSlide 0.4s ease forwards;
 }
+.answer-correct { color: var(--gold); }
+.answer-wrong   { color: var(--red); }
 
-.answer-wrong {
-    color: var(--red);
-    text-align: center;
+/* ---- Hint button ---- */
+#hint-btn {
+    margin-top: 8px;
+    padding: 8px;
+    background: #fff8dc;
+    color: #7a5c00;
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    cursor: pointer;
     font-size: 0.82em;
-    font-weight: 600;
-    margin-bottom: 4px;
-    opacity: 0;
-    transform: translateY(-4px);
-    animation: fadeSlide 0.4s ease forwards;
+    font-weight: 700;
+    width: 100%;
+    transition: background 0.15s, transform 0.1s;
 }
+#hint-btn:hover:not(:disabled) { background: #fff0a0; transform: translateY(-1px); }
+#hint-btn:disabled, #hint-btn.hint-empty { opacity: 0.4; cursor: not-allowed; background: #f0ede8; border-color: var(--tan-dark); color: #999; }
 
-/* ---------- Progress bar ---------- */
+/* ---- Progress bar ---- */
 #progress-wrap {
-    margin-top: 14px;
+    margin-top: 12px;
     background: var(--tan-dark);
     border-radius: 4px;
     height: 8px;
     overflow: hidden;
 }
-
 #progress-bar {
     height: 8px;
     background: var(--blue);
     width: 0%;
     transition: width 0.5s ease;
-    border-radius: 4px;
 }
 
-/* ---------- Stats bar ---------- */
+/* ---- Stats ---- */
 #stats-bar {
     margin-top: 12px;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
+.stat-row { font-size: 0.88em; font-weight: 600; }
+#timer         { font-family: 'Oswald', sans-serif; font-size: 1.1em; color: var(--blue); }
+#high-score-val{ font-family: 'Oswald', sans-serif; font-size: 1.1em; color: var(--green); }
 
-.stat-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.88em;
-    color: var(--text-dark);
-    font-weight: 600;
-}
-
-.stat-icon { font-size: 1em; }
-
-#timer {
+#streak-display {
+    background: linear-gradient(135deg, #ff6b00, #ffaa00);
+    color: white;
     font-family: 'Oswald', sans-serif;
-    font-size: 1.1em;
-    color: var(--blue);
+    font-size: 1em;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-align: center;
 }
+.streak-pop { animation: streak-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
 
-#high-score-val {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.1em;
-    color: var(--green);
-}
-
-/* ---------- New high score badge ---------- */
 #new-hs-badge {
     display: none;
     background: var(--gold);
@@ -152,31 +159,22 @@ body {
     border-radius: 3px;
     text-align: center;
     margin-top: 6px;
-    letter-spacing: 1px;
 }
 
-/* ---------- Final score ---------- */
 #score-display {
     font-family: 'Oswald', sans-serif;
-    font-size: 2.2em;
+    font-size: 2em;
     font-weight: 700;
-    color: var(--text-dark);
-    margin-top: 18px;
-    line-height: 1.2;
+    margin-top: 16px;
     display: none;
     opacity: 0;
     transition: opacity 0.8s;
 }
+#score-display.visible { display: block; opacity: 1; }
 
-#score-display.visible {
-    display: block;
-    opacity: 1;
-}
-
-/* ---------- Restart button ---------- */
 #restart-btn {
     display: none;
-    margin-top: 16px;
+    margin-top: 14px;
     padding: 10px;
     background: var(--blue);
     color: white;
@@ -189,69 +187,81 @@ body {
     border-radius: 3px;
     transition: background 0.2s, transform 0.1s;
 }
+#restart-btn:hover  { background: var(--blue-lt); transform: translateY(-1px); }
+#restart-btn:active { transform: translateY(0); }
 
-#restart-btn:hover {
-    background: var(--blue-light);
-    transform: translateY(-1px);
+#instructions { margin-top: 10px; font-size: 0.78em; color: #555; line-height: 1.4; }
+
+/* ---- Map ---- */
+#map { flex: 1; height: 100vh; }
+
+/* ---- Difficulty overlay ---- */
+#difficulty-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,30,48,0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    backdrop-filter: blur(3px);
 }
 
-#restart-btn:active {
-    transform: translateY(0);
+#diff-box {
+    background: var(--tan);
+    border-radius: 10px;
+    padding: 32px 36px;
+    width: 340px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
 }
 
-/* ---------- Instructions ---------- */
-#instructions {
-    margin-top: 10px;
-    font-size: 0.78em;
-    color: #555;
-    line-height: 1.4;
+#diff-logo { font-size: 2.5em; margin-bottom: 8px; }
+
+#diff-box h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.7em;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
 }
 
-/* ==========================================
-   MAP
-   ========================================== */
-#map {
-    flex: 1;
-    height: 100vh;
+#diff-box p { font-size: 0.9em; color: #666; margin-bottom: 20px; }
+
+#diff-buttons { display: flex; flex-direction: column; gap: 10px; }
+
+.diff-btn {
+    padding: 12px 16px;
+    border: 2px solid var(--tan-dark);
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
 }
+.diff-btn:hover { border-color: var(--blue); background: #edf4ff; transform: translateY(-2px); }
+.diff-btn:active { transform: translateY(0); }
 
-/* ==========================================
-   ANIMATIONS
-   ========================================== */
+/* ---- Animations ---- */
+@keyframes fadeSlide { to { opacity: 1; transform: translateY(0); } }
+.answer-correct, .answer-wrong { transform: translateY(-4px); }
 
-/* Feedback text slides in */
-@keyframes fadeSlide {
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Wrong answer — sidebar shakes */
 @keyframes shake {
     0%,100% { transform: translateX(0); }
-    20%      { transform: translateX(-8px); }
-    40%      { transform: translateX(8px); }
-    60%      { transform: translateX(-6px); }
-    80%      { transform: translateX(6px); }
+    20%     { transform: translateX(-8px); }
+    40%     { transform: translateX(8px); }
+    60%     { transform: translateX(-6px); }
+    80%     { transform: translateX(6px); }
 }
-
-/* Correct answer — sidebar pulses */
 @keyframes pulse {
     0%,100% { transform: scale(1); }
-    50%      { transform: scale(1.02); }
+    50%     { transform: scale(1.02); }
 }
+@keyframes flash-green { 0%,100% { background: var(--tan); } 50% { background: #c8f0c8; } }
+@keyframes flash-red   { 0%,100% { background: var(--tan); } 50% { background: #f0c8c8; } }
+@keyframes streak-pop  { 0% { transform: scale(0.8); opacity: 0.4; } 60% { transform: scale(1.15); } 100% { transform: scale(1); opacity: 1; } }
 
-/* Correct — background flashes green */
-@keyframes flash-green {
-    0%,100% { background: var(--tan); }
-    50%      { background: #c8f0c8; }
-}
-
-/* Wrong — background flashes red */
-@keyframes flash-red {
-    0%,100% { background: var(--tan); }
-    50%      { background: #f0c8c8; }
-}
-
-/* Animation utility classes applied by JS */
 .anim-shake       { animation: shake       0.45s ease; }
 .anim-pulse       { animation: pulse       0.40s ease; }
 .anim-flash-green { animation: flash-green 0.60s ease; }
